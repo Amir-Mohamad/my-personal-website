@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {{article.title}}
+    {{article.content|safe}}
+
+    {% for tag in article.tags.all %}
+        {{ tag }}
+    {% endfor %}
+
+    <form method="post" hx-post="{% url 'core:comment-create' %}" hx-vals='{"id":{{article.id}}}'>
+        {% csrf_token %}
+
+        <input type="text" name="text">
+
+        <button type="submit">Submit</button>
+    </form>
+    {% for comment in article.comments.all %}
+          <div>
+
+        {{comment.body}}
+        <button onclick="replycheck()">Reply</button>
+        <form hx-post="{% url 'core:comment-create' %}" method="post" style="display: none;" id="reply-form">
+            {% csrf_token %}
+
+            <input type="text" name="text">
+
+            <button type="submit">Submit</button>
+        </form>
+        {% with replies=comment.replies.all %}
+            {% for reply in replies %}
+                <p class="bg-primary p-3 m-2">{{ reply.user }} <br/> {{ reply.body }}</p>
+            {% endfor %}
+        {% endwith %}
+        <a href=""></a>
+        </div>
+
+    {% endfor %}
+<script>
+    function replycheck() {
+        form = document.querySelector('#reply-form')
+
+        form.style.display = ""
+    }
+</script>
+{% endblock content %}
