@@ -1,0 +1,10 @@
+Tasks:
+ - check reply system 
+ - comment and reply DONE
+ - like and dislike DONE
+ - usefull lists 
+ - category and sub category
+ - lists
+ - top articles
+ - bookmark system
+ 

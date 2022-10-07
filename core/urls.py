@@ -8,4 +8,7 @@ urlpatterns = [
 
     # comment
     path('comment-create/', views.comment_create, name='comment-create'),
+    path('reply-create/', views.reply_create, name='reply-create'),
+
+
 ]

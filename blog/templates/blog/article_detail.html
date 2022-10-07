@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 
+{% block head %}
+
+    <style>
+        button {
+            background-color: red;
+            border-radius: 4px;
+            padding: 2px;
+        }
+    </style>
+{% endblock head %}
+
 {% block content %}
 
     {{article.title}}
@@ -21,7 +32,7 @@
 
         {{comment.body}}
         <button onclick="replycheck()">Reply</button>
-        <form hx-post="{% url 'core:comment-create' %}" method="post" style="display: none;" id="reply-form">
+        <form hx-post="{% url 'core:reply-create' %}" hx-vals='{"id":{{comment.id}}}' method="post" style="display: none;" id="reply-form">
             {% csrf_token %}
 
             <input type="text" name="text">
@@ -37,7 +48,15 @@
         </div>
 
     {% endfor %}
+
+        <div>
+            {% include "blog/partials/like.html" %}
+        </div>
+    
 <script>
+    document.body.addEventListener('htmx:configRequest', (e) => {
+        e.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        })
     function replycheck() {
         form = document.querySelector('#reply-form')
 

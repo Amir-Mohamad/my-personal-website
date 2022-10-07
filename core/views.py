@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.shortcuts import HttpResponse, get_object_or_404
 from blog.models import Article
 from django.contrib.auth.decorators import login_required
-from .models import Comment
+from .models import Comment, Reply
 
 
 class Home(View):
@@ -30,3 +30,22 @@ def comment_create(request):
         return HttpResponse('کامنت شما با موفقیت ثبت شد')
     else:
         return HttpResponse('کرم نریز بجه')
+    
+
+@login_required
+def reply_create(request):
+    if request.method == 'POST':
+        comment = Comment.objects.get(id=request.POST['id'])
+        reply = Reply.objects.create(user=request.user,
+            body=request.POST['text'],
+            comment=comment
+        )
+        if request.user.is_authenticated:
+            reply.is_active=True
+            reply.save()
+        # send email and successfull response
+        return HttpResponse('کامنت شما با موفقیت ثبت شد')
+    else:
+        return HttpResponse('کرم نریز بجه')
+    
+
