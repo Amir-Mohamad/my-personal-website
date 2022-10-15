@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>دسته بندی {{  }}</title>
+    <title>دسته بندی </title>
 {% endblock head %}
+
+{% block content %}
+    {% for c in category_data.articles.all %}
+        {{ c.title }}
+    {% endfor %}
+{% endblock content %}

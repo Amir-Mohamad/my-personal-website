@@ -5,8 +5,8 @@ from django.db import models
 from taggit.managers import TaggableManager
 from blog.validators import validate_cover
 from blog.models.base import BlogBaseModel
-from blog.models.category import Category
 from blog.models.list import List
+from core.models import Category
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 
 from core.models import Comment
@@ -25,7 +25,7 @@ class Article(BlogBaseModel):
     )
     author = models.ForeignKey(
         User, blank=True, null=True, on_delete=models.SET_NULL, verbose_name='نویسنده')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='دسته بندی')
+    category = GenericRelation(Category, verbose_name='دسته بندی', related_query_name='articles')
     list = models.ForeignKey(
         List, blank=True, null=True, on_delete=models.SET_NULL, verbose_name='لیست')
     title = models.CharField(max_length=250, verbose_name='عنوان')

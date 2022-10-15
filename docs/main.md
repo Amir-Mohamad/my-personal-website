@@ -12,3 +12,11 @@ and if we use ploymorphism we cant access to the detailed data in each instance
 ## what features can use polymorphism system
 seems using ploymorphism system can be used in comment/reply crud and other features that they dont
 need to access the detailed data in instances (ex: like/dislike)
+
+
+## Why we remove lists ?
+lists are not too much usefull in the v1
+we grow the category feature instead
+
+
+

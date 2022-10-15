@@ -1,10 +1,8 @@
 Tasks:
  - check reply system 
- - comment and reply DONE
- - like and dislike DONE
- - usefull lists 
  - category and sub category
- - lists
- - top articles
  - bookmark system
  
+# About Tasks:
+- Category System :
+    We should have many-to-one relationship from Category model to parent (with polymorphism)

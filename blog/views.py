@@ -1,17 +1,16 @@
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render
-from django.contrib.auth import get_user_model
 from django.views.generic import View
 from django.shortcuts import get_object_or_404, HttpResponse
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
 
-from core.models import Comment
+from core.models import Category
 from .models import Article
 
 
 class ArticleList(View):
     """
-        Shows all blog posts by their is_active field
+        Shows all blog posts by is_active field
     """
     template_name = 'blog/articles.html'
 
@@ -44,10 +43,10 @@ def article_like(request, article_id):
     """
     
     NOTE:
-        Why we cant use ploymorphism in this function ?
+        Why we cant use polymorphism in this function ?
          - in this case we should return a response that uses the article/parent data
-         - and if we use ploymorphism we cant access to the detailed data in each instance
-         - (becuase of differnt names in each response: article/book/parent).
+         - and if we use polymorphism we cant access to the detailed data in each instance
+         - (because of different names in each response: article/book/parent).
     """
     if request.method == 'POST':
         article = get_object_or_404(Article, id=article_id)
@@ -61,3 +60,4 @@ def article_like(request, article_id):
         return render(request, 'blog/partials/like.html', context={'article': article})
     else:
         return HttpResponse('به ارور برخوردیم. بعدا تلاش کن')
+

@@ -16,6 +16,38 @@ class CoreBaseModel(models.Model):
         abstract = True
 
 
+class Category(CoreBaseModel):
+    name = models.CharField(max_length=250)
+    slug = models.SlugField()
+
+    object_id = models.IntegerField(default=1)
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.PROTECT,
+    )
+    parent = GenericForeignKey(
+        'content_type',
+        'object_id',
+    )
+
+    objects = models.Manager()
+    active = ActiveManager()
+
+    class Meta:
+        verbose_name = 'دسته بندی'
+        verbose_name_plural = 'دسته بندی ها'
+
+    def is_category_active(self):
+        if self.is_active:
+            return True
+        else:
+            return False
+    is_category_active.boolean = True
+
+    def __str__(self):
+        return self.name
+
+
 class Comment(CoreBaseModel):
     """
         The main comment model in article and blog pages
