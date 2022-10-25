@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from mptt.models import TreeForeignKey, MPTTModel
 from .managers import ActiveManager
 
 User = get_user_model()
@@ -16,7 +17,7 @@ class CoreBaseModel(models.Model):
         abstract = True
 
 
-class Category(CoreBaseModel):
+class Category(CoreBaseModel, MPTTModel):
     name = models.CharField(max_length=250)
     slug = models.SlugField()
 
@@ -29,11 +30,19 @@ class Category(CoreBaseModel):
     #     'content_type',
     #     'object_id',
     # )
+    parent = TreeForeignKey(
+        'self',
+        blank=True,
+        null=True,
+        related_name='child',
+        on_delete=models.CASCADE
+    )
 
     objects = models.Manager()
     active = ActiveManager()
 
     class Meta:
+        unique_together = ('slug', 'parent',)
         verbose_name = 'دسته بندی'
         verbose_name_plural = 'دسته بندی ها'
 
@@ -45,7 +54,13 @@ class Category(CoreBaseModel):
     is_category_active.boolean = True
 
     def __str__(self):
-        return self.name
+        full_path = [self.name]            
+        k = self.parent
+        while k is not None:
+            full_path.append(k.name)
+            k = k.parent
+
+        return ' -> '.join(full_path[::-1])
 
 
 class Comment(CoreBaseModel):

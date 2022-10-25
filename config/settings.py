@@ -43,10 +43,10 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'core.apps.CoreConfig',
     'accounts.apps.AccountsConfig',
+
     'ckeditor',
-
     'taggit',
-
+    'mptt',
 ]
 SITE_ID = 1
 
