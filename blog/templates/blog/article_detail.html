@@ -52,6 +52,10 @@
         <div>
             {% include "blog/partials/like.html" %}
         </div>
+
+    {% for cat in article.category.all %}
+        {{cat.name}}
+    {% endfor %}
     
 <script>
     document.body.addEventListener('htmx:configRequest', (e) => {

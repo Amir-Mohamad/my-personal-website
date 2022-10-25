@@ -20,15 +20,15 @@ class Category(CoreBaseModel):
     name = models.CharField(max_length=250)
     slug = models.SlugField()
 
-    object_id = models.IntegerField(default=1)
-    content_type = models.ForeignKey(
-        ContentType,
-        on_delete=models.PROTECT,
-    )
-    parent = GenericForeignKey(
-        'content_type',
-        'object_id',
-    )
+    # object_id = models.IntegerField(default=1)
+    # content_type = models.ForeignKey(
+    #     ContentType,
+    #     on_delete=models.PROTECT,
+    # )
+    # parent = GenericForeignKey(
+    #     'content_type',
+    #     'object_id',
+    # )
 
     objects = models.Manager()
     active = ActiveManager()

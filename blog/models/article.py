@@ -25,7 +25,7 @@ class Article(BlogBaseModel):
     )
     author = models.ForeignKey(
         User, blank=True, null=True, on_delete=models.SET_NULL, verbose_name='نویسنده')
-    category = GenericRelation(Category, verbose_name='دسته بندی', related_query_name='articles')
+    category = models.ManyToManyField(Category, related_name='articles', verbose_name='دسته بندی')
     list = models.ForeignKey(
         List, blank=True, null=True, on_delete=models.SET_NULL, verbose_name='لیست')
     title = models.CharField(max_length=250, verbose_name='عنوان')
@@ -47,8 +47,8 @@ class Article(BlogBaseModel):
         verbose_name = "مقاله"
         verbose_name_plural = "مقالات"
 
-    def __str__(self):
-        return self.title
-
     def likes_count(self):
         return self.likes.count()
+    
+    def __str__(self):
+        return self.title

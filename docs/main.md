@@ -18,5 +18,6 @@ need to access the detailed data in instances (ex: like/dislike)
 lists are not too much usefull in the v1
 we grow the category feature instead
 
-
-
+## How we handle Category feature ?
+With M2M relationship 
+we had too many problem while using it with polymorphism system
