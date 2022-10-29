@@ -9,6 +9,8 @@ urlpatterns = [
     # comment
     path('comment-create/', views.comment_create, name='comment-create'),
     path('reply-create/', views.reply_create, name='reply-create'),
+    path('bookmark-create/<int:article_id>/', views.bookmark_create, name='bookmark-create'),
+
 
     # category
     path('category/<str:slug>/', views.CategoryView.as_view(), name='category'),

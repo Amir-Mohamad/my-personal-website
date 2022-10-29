@@ -1,0 +1,15 @@
+<div class="list-group list-group-horizontal btn-group" id="bookmarksarea" role="group">
+    <p>{{ article.bookmarks.count }} bookmarks
+    
+        <button hx-post="{% url 'core:bookmark-create' article.id %}" id="article-button" 
+          hx-target="#bookmarksarea" hx-swap="outerHTML">
+          {% if request.user in article.bookmarks.all %}
+            <i class="material-icons" style="font-size:16px;color:green;">check_box</i>
+          {% else %}
+          <i class="material-icons" style="font-size:16px;color:yellowgreen;">check_box_outline_blank</i>
+          {% endif %}
+        </button>
+
+    </p> 
+    
+</div>

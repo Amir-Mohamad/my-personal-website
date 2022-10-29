@@ -56,7 +56,10 @@
     {% for cat in article.category.all %}
         {{cat.name}}
     {% endfor %}
-    
+        <div>
+            {% include "blog/partials/bookmark.html" %}
+        </div>
+        
 <script>
     document.body.addEventListener('htmx:configRequest', (e) => {
         e.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';

@@ -115,3 +115,29 @@ class Reply(CoreBaseModel):
 
     def __str__(self):
         return self.body
+
+
+class Bookmark(CoreBaseModel):
+    ARTICLE = 'article'
+    BOOK = 'book'
+    TYPE_CHOICES = (
+        (ARTICLE, 'Article'),
+        (BOOK, 'Book'),
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    parent_object_id = models.IntegerField(default=1)
+    parent_content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.PROTECT,
+    )
+    parent = GenericForeignKey(
+        'parent_content_type',
+        'parent_object_id',
+    )
+
+    objects = models.Manager()
+    active = ActiveManager()
+
+    def __str__(self):
+        return f'{self.user} -> {self.parent}'

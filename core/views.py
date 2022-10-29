@@ -4,7 +4,8 @@ from django.shortcuts import HttpResponse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from blog.models import Article
-from .models import Comment, Reply, Category
+from .models import Bookmark, Comment, Reply, Category
+from django.contrib.contenttypes.models import ContentType
 
 
 class Home(View):
@@ -71,3 +72,23 @@ class CategoryListView(View):
         return render(request, self.template_name, context={'categories': categories})
 
 
+def bookmark_create(request, article_id):
+    if request.method == 'POST':
+    
+        parent = get_object_or_404(Article, id=article_id)
+
+        parent_content_type=ContentType.objects.get_for_model(parent)
+
+        if type == 'article':
+            parent = get_object_or_404(Article, id=article_id)
+        else:
+            pass
+        bookmark = Bookmark.objects.filter(user=request.user, parent_object_id=parent.id, parent_content_type=parent_content_type) 
+        if bookmark.exists():
+            bookmark.delete()
+            print('deleted')
+        else:
+            Bookmark.objects.create(user=request.user, parent_object_id=parent.id, parent_content_type=parent_content_type)
+            print('created')
+
+        return HttpResponse('بنازم. نشان گذاری شد.')

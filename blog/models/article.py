@@ -6,7 +6,7 @@ from taggit.managers import TaggableManager
 from blog.validators import validate_cover
 from blog.models.base import BlogBaseModel
 from blog.models.list import List
-from core.models import Category
+from core.models import Bookmark, Category
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 
 from core.models import Comment
@@ -38,6 +38,8 @@ class Article(BlogBaseModel):
         User, blank=True, related_name='article_like', verbose_name='لایک ها')
     vpn = models.BooleanField(default=False, verbose_name='آیا نیاز به vpn دارد ؟')
     comments = GenericRelation(Comment, content_type_field='parent_content_type', object_id_field='parent_object_id')
+    bookmarks = GenericRelation(Bookmark, content_type_field='parent_content_type', object_id_field='parent_object_id')
+
     objects = models.Manager()
     active = ActiveManager()
     tags = TaggableManager()
