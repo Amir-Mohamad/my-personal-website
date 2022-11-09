@@ -1,3 +1,2 @@
 Tasks:
  - short link 
- - newsletter

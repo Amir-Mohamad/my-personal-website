@@ -1,11 +1,12 @@
-from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import render
-from django.views.generic import View
-from django.shortcuts import get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.contenttypes.models import ContentType
+from django.shortcuts import get_object_or_404, HttpResponse
+from django.shortcuts import render
+from django.views.decorators.http import require_POST
+from django.views.generic import View
 from core.models import Category
 from .models import Article
+
 
 
 class ArticleList(View):
@@ -39,6 +40,7 @@ class ArticleDetail(View):
 
 
 @login_required
+@require_POST
 def article_like(request, article_id):
     """
     

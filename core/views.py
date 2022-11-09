@@ -1,11 +1,12 @@
-from django.shortcuts import render
-from django.views.generic import View
-from django.shortcuts import HttpResponse, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
-from blog.models import Article
-from .models import Bookmark, Comment, Reply, Category
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Count
+from django.shortcuts import HttpResponse, get_object_or_404
+from django.shortcuts import render
+from django.views.decorators.http import require_POST
+from django.views.generic import View
+from .models import Bookmark, Comment, Reply, Category
+from blog.models import Article
 
 
 class Home(View):
@@ -20,6 +21,7 @@ class Home(View):
 
 
 @login_required
+@require_POST
 def comment_create(request):
     if request.method == 'POST':
         parent = get_object_or_404(Article, id=request.POST['id'])
@@ -37,6 +39,7 @@ def comment_create(request):
     
 
 @login_required
+@require_POST
 def reply_create(request):
     if request.method == 'POST':
         comment = Comment.objects.get(id=request.POST['id'])
@@ -71,7 +74,8 @@ class CategoryListView(View):
 
         return render(request, self.template_name, context={'categories': categories})
 
-
+@login_required
+@require_POST
 def bookmark_create(request, article_id):
     if request.method == 'POST':
     
@@ -92,3 +96,5 @@ def bookmark_create(request, article_id):
             print('created')
 
         return HttpResponse('بنازم. نشان گذاری شد.')
+    else:
+        return HttpResponse('به ارور برخوردیم')
