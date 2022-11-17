@@ -1,5 +1,4 @@
 ### What i was working on ?
-I wrote bookmark using polymorphism system, 
-but i think we have a better way to make it work.
+I wrote the books main model 
 
-# method decorators for htmx views
+next: List View and Detail view for Books with all of the features

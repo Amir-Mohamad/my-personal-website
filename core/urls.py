@@ -9,7 +9,7 @@ urlpatterns = [
     # comment
     path('comment-create/', views.comment_create, name='comment-create'),
     path('reply-create/', views.reply_create, name='reply-create'),
-    path('bookmark-create/<int:article_id>/', views.bookmark_create, name='bookmark-create'),
+    path('bookmark-create/', views.bookmark_create, name='bookmark-create'),
 
 
     # category

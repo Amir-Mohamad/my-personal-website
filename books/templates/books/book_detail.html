@@ -13,21 +13,21 @@
 
 {% block content %}
 
-    {{article.title}}
-    {{article.content|safe}}
+    {{book.title}}
+    {{book.content|safe}}
 
-    {% for tag in article.tags.all %}
+    {% for tag in book.tags.all %}
         {{ tag }}
     {% endfor %}
 
-    <form method="post" hx-post="{% url 'core:comment-create' %}" hx-vals='{"id":{{article.id}}, "type": "article"}'>
+    <form method="post" hx-post="{% url 'core:comment-create' %}" hx-vals='{"id":{{book.id}}, "type": "book"}'>
         {% csrf_token %}
 
         <input type="text" name="text">
 
         <button type="submit">Submit</button>
     </form>
-    {% for comment in article.comments.all %}
+    {% for comment in book.comments.all %}
           <div>
 
         {{comment.body}}
@@ -50,14 +50,18 @@
     {% endfor %}
 
         <div>
-            {% include "blog/partials/like.html" %}
+            {% include "books/partials/like.html" %}
+        </div>
+        <div>
+
+            {% include "books/partials/bookmark.html" %}
         </div>
 
-    {% for cat in article.category.all %}
+
+    {% for cat in book.category.all %}
         {{cat.name}}
     {% endfor %}
         <div>
-            {% include "blog/partials/bookmark.html" %}
         </div>
         
 <script>

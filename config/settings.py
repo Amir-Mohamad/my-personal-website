@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'core.apps.CoreConfig',
     'accounts.apps.AccountsConfig',
+    'books.apps.BooksConfig',
 
     'ckeditor',
     'taggit',

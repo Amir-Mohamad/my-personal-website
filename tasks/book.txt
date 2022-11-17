@@ -1,0 +1,5 @@
+Books Tasks:
+    - Book Model DONE
+    - Book list view DONE
+    - book detail view DONE
+    - merge with other featuers DONE

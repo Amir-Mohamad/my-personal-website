@@ -7,6 +7,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import View
 from .models import Bookmark, Comment, Reply, Category
 from blog.models import Article
+from books.models import Book
 
 
 class Home(View):
@@ -25,6 +26,12 @@ class Home(View):
 def comment_create(request):
     if request.method == 'POST':
         parent = get_object_or_404(Article, id=request.POST['id'])
+
+        if request.POST['type'] == 'article':
+            parent = get_object_or_404(Article, id=request.POST['id'])
+        elif request.POST['type'] == 'book':
+            parent = get_object_or_404(Book, id=request.POST['id'])
+
         comment = Comment.objects.create(user=request.user,
             body=request.POST['text'],
             parent=parent
@@ -76,25 +83,31 @@ class CategoryListView(View):
 
 @login_required
 @require_POST
-def bookmark_create(request, article_id):
+def bookmark_create(request):
     if request.method == 'POST':
     
-        parent = get_object_or_404(Article, id=article_id)
+        parent = get_object_or_404(Article, id=request.POST['id']) # default parent
+
+
+        type = request.POST['type']
+        print(type)
+        if type == 'article':
+            parent = get_object_or_404(Article, id=request.POST['id'])
+        elif type == 'book':
+            parent = get_object_or_404(Book, id=request.POST['id'])
 
         parent_content_type=ContentType.objects.get_for_model(parent)
 
-        if type == 'article':
-            parent = get_object_or_404(Article, id=article_id)
-        else:
-            pass
         bookmark = Bookmark.objects.filter(user=request.user, parent_object_id=parent.id, parent_content_type=parent_content_type) 
         if bookmark.exists():
             bookmark.delete()
             print('deleted')
+            return HttpResponse('نشان شما حدف شد')
+
         else:
             Bookmark.objects.create(user=request.user, parent_object_id=parent.id, parent_content_type=parent_content_type)
             print('created')
 
-        return HttpResponse('بنازم. نشان گذاری شد.')
+            return HttpResponse('بنازم. نشان گذاری شد.')
     else:
         return HttpResponse('به ارور برخوردیم')
