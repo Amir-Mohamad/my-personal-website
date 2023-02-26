@@ -38,8 +38,8 @@ class Book(BooksBaseModel):
     likes = models.ManyToManyField(
         User, blank=True, related_name='book_like', verbose_name='لایک ها')
     vpn = models.BooleanField(default=False, verbose_name='آیا نیاز به vpn دارد ؟')
-    comments = GenericRelation(Comment, content_type_field='parent_content_type', object_id_field='parent_object_id') # IDK why this is here ?!?
-    bookmarks = GenericRelation(Bookmark, content_type_field='parent_content_type', object_id_field='parent_object_id') # IDK why this is here ?!?
+    comments = GenericRelation(Comment, content_type_field='parent_content_type', object_id_field='parent_object_id')
+    bookmarks = GenericRelation(Bookmark, content_type_field='parent_content_type', object_id_field='parent_object_id')
 
     objects = models.Manager()
     active = ActiveManager()
